@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>unimportant.art - data.html</title>
+<style>
+body { background: #000; color: #ccc; font-family: 'Courier New', monospace; padding: 20px; line-height: 1.4; }
+a { color: #fff; text-decoration: none; cursor: pointer; }
+a:hover { text-decoration: underline; background: #333; }
+.book-container { max-width: 600px; margin: 0 auto; border: 1px solid #444; padding: 30px; min-height: 500px; position: relative; }
+.page { display: none; }
+.active-page { display: block; }
+.nav-bar { text-align: center; margin-top: 20px; max-width: 600px; margin-left: auto; margin-right: auto; font-weight: bold; }
+
+.diagram { position: relative; width: 400px; height: 400px; margin: 20px auto; border: 1px solid #444; }
+.diagram img { width: 100%; height: 100%; display: block; }
+.label { position: absolute; background: #000; color: #fff; border: 1px dashed #777; padding: 2px 6px; font-size: 12px; z-index: 10; }
+.line { position: absolute; background: #777; z-index: 5; }
+
+ul { list-style-type: square; margin-left: 20px; padding-left: 0; }
+li { margin-bottom: 10px; }
+.sub-list { list-style-type: circle; margin-left: 20px; margin-top: 5px; }
+</style>
+</head>
+<body>
+
+<pre><a href="index.html">[DIR] index</a></pre>
+<br>
+
+<div class="book-container">
+
+    <div id="p1" class="page active-page">
+        <h2 style="text-align: center; letter-spacing: 2px;">Neque porro quisquam</h2>
+        
+        <div class="diagram">
+            <img src="https://via.placeholder.com/400/111111/cccccc?text=De+Finibus" alt="Cover">
+            
+            <div class="label" style="top: 45%; left: -10%;">est qui</div>
+            <div class="line" style="top: 48%; left: 5%; width: 40%; height: 1px;"></div>
+            
+            <div class="label" style="top: 75%; left: 85%;">dolorem</div>
+            <div class="line" style="top: 78%; left: 55%; width: 35%; height: 1px;"></div>
+            
+            <div class="label" style="top: 25%; left: -15%;">ipsum quia</div>
+            <div class="line" style="top: 28%; left: 15%; width: 25%; height: 1px;"></div>
+        </div>
+    </div>
+
+    <div id="p2" class="page">
+        <h2>consectetur adipisci</h2>
+        <hr style="border: 0; border-top: 1px dashed #444; margin-bottom: 20px;">
+        <p>velit. Sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+        <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?</p>
+        <p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur?</p>
+    </div>
+
+        <div id="p3" class="page">
+                <h2>vel illum qui</h2>
+                <hr style="border: 0; border-top: 1px dashed #444; margin-bottom: 20px;">
+                <pre>
+        [ <a onclick="turnPage(4)">dolorem eum fugiat</a> ]
+            - quo voluptas nulla pariatur
+            - Neque porro quisquam est
+
+        [ <a onclick="turnPage(5)">qui dolorem</a> ]
+            - ipsum quia dolor sit amet
+            - consectetur adipisci velit
+            - Sed quia non numquam
+                        </pre>
+        </div>
+
+    <div id="p4" class="page">
+        <h2>eius modi tempora</h2>
+        <hr style="border: 0; border-top: 1px dashed #444; margin-bottom: 20px;">
+        <ul>
+            <li><strong>HAZARD_ALPHA:</strong> eius modi tempora incidunt ut labore et dolore.</li>
+            <li><strong>HAZARD_BETA:</strong> magnam aliquam quaerat voluptatem ut enim ad minima.</li>
+            <li><strong>HAZARD_GAMMA:</strong> veniam quis nostrum exercitationem ullam corporis suscipit.</li>
+        </ul>
+        <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+    </div>
+
+    <div id="p5" class="page">
+        <h2>DATA INTEGRITY</h2>
+        <hr style="border: 0; border-top: 1px dashed #444; margin-bottom: 20px;">
+        <ul>
+            <li><strong>ALCOHOL_ACQUISITION:</strong> neque porro quisquam est qui dolorem ipsum.</li>
+            <li><strong>ALCOHOL_CONSUMPTION:</strong> quia dolor sit amet consectetur adipisci velit.</li>
+            <li><strong>HONESTY:</strong> sed quia non numquam eius modi tempora incidunt.
+                <ul class="sub-list">
+                    <li><em>Exception A:</em> ut labore et dolore magnam aliquam quaerat voluptatem.</li>
+                    <li><em>Constraint B:</em> Ut enim ad minima veniam quis nostrum.</li>
+                </ul>
+            </li>
+            <li><strong>CODE_DELTA:</strong> exercitationem ullam corporis suscipit laboriosam.</li>
+            <li><strong>CODE_EPSILON:</strong> nisi ut aliquid ex ea commodi consequatur.</li>
+        </ul>
+    </div>
+
+</div>
+
+<div class="nav-bar">
+    [ <a onclick="turnPage(currentPage - 1)">&lt; PREV</a> ] 
+    &nbsp;&nbsp;PAGE <span id="page-num">1</span> OF 5&nbsp;&nbsp; 
+    [ <a onclick="turnPage(currentPage + 1)">NEXT &gt;</a> ]
+</div>
+
+<script>
+let currentPage = 1;
+const totalPages = 5;
+
+function turnPage(target) {
+    if (target < 1) target = 1;
+    if (target > totalPages) target = totalPages;
+    
+    for (let i = 1; i <= totalPages; i++) {
+        document.getElementById('p' + i).className = 'page';
+    }
+    
+    document.getElementById('p' + target).className = 'page active-page';
+    document.getElementById('page-num').innerText = target;
+    currentPage = target;
+    window.scrollTo(0, 0);
+}
+</script>
+
+</body>
+</html>

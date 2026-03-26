@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>unimportant.art - quest</title>
+<style>
+body { background: #000; color: #0f0; font-family: 'Courier New', monospace; padding: 20px; margin: 0; height: 100vh; display: flex; flex-direction: column; }
+.container { max-width: 800px; margin: 0 auto; width: 100%; flex: 1; display: flex; flex-direction: column; }
+.nav { margin-bottom: 12px; color: #ccc; }
+.nav a { color: #fff; text-decoration: none; }
+.nav a:hover { text-decoration: underline; }
+#output { flex: 1; overflow-y: auto; border: 1px solid #0f0; padding: 12px; margin-bottom: 12px; white-space: pre-wrap; word-wrap: break-word; line-height: 1.4; }
+#input { padding: 8px; border: 1px solid #0f0; background: #000; color: #0f0; font-family: 'Courier New', monospace; font-size: 14px; width: 100%; box-sizing: border-box; }
+#input:focus { outline: none; }
+.status { color: #666; font-size: 12px; margin-top: 4px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="nav">[ <a href="index.html">ROOT</a> ] &nbsp; [ <a href="gallery.html">GALLERY</a> ] &nbsp; [ <a href="cinema.html">CINEMA</a> ] &nbsp; [ <a href="poetry.html">POETRY</a> ] &nbsp; [ <a href="data.html">DATA</a> ]</div>
+  <div id="output"></div>
+  <input type="text" id="input" placeholder="> " autofocus>
+  <div class="status" id="status">Connecting...</div>
+</div>
+
+<script>
+const output = document.getElementById('output');
+const input = document.getElementById('input');
+const status = document.getElementById('status');
+
+const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+const wsUrl = wsProtocol + '//' + window.location.host;
+
+let ws;
+
+function connect() {
+  ws = new WebSocket(wsUrl);
+  
+  ws.onopen = () => {
+    status.textContent = 'Connected';
+  };
+  
+  ws.onmessage = (event) => {
+    output.textContent += event.data;
+    output.scrollTop = output.scrollHeight;
+  };
+  
+  ws.onclose = () => {
+    status.textContent = 'Disconnected. Reconnecting...';
+    setTimeout(connect, 3000);
+  };
+  
+  ws.onerror = (error) => {
+    status.textContent = 'Error';
+    console.error('WebSocket error:', error);
+  };
+}
+
+input.addEventListener('keypress', (event) => {
+  if (event.key === 'Enter') {
+    const command = input.value.trim();
+    if (command) {
+      output.textContent += '\n> ' + command + '\n';
+      output.scrollTop = output.scrollHeight;
+      ws.send(command);
+      input.value = '';
+    }
+  }
+});
+
+connect();
+</script>
+</body>
+</html>

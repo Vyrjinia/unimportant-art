@@ -1,0 +1,13 @@
+{
+  "name": "unimportant-art-mush",
+  "version": "1.0.0",
+  "description": "Minimal MUSH backend for unimportant.art",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ws": "^8.14.2"
+  }
+}

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>unimportant.art - quest</title>
+<style>
+body { background: #000; color: #0f0; font-family: 'Courier New', monospace; padding: 20px; margin: 0; min-height: 100vh; display: flex; }
+.container { max-width: 800px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; }
+.nav { margin-bottom: 12px; color: #ccc; font-size: 12px; }
+.nav a { color: #fff; text-decoration: none; }
+.nav a:hover { text-decoration: underline; }
+#output { flex: 1; white-space: pre-wrap; word-wrap: break-word; line-height: 1.4; margin-bottom: 12px; }
+#input { padding: 6px; border: 1px solid #0f0; background: #000; color: #0f0; font-family: 'Courier New', monospace; font-size: 14px; width: 100%; box-sizing: border-box; }
+#input:focus { outline: none; }
+</style>
+</head>
+<body>
+<pre><a href="index.html">[DIR] index</a></pre>
+<div class="container">
+
+  <div id="output"></div>
+  <input type="text" id="input" placeholder="> " autofocus>
+</div>
+
+<script>
+const output = document.getElementById('output');
+const input = document.getElementById('input');
+
+const scenes = {
+  start: {
+    text: 'neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur adipisci velit.\n\nYou find yourself in an intersection. There is a hallway leading off to your north. There is an open door which leads to a warmly lit room on your eastern flank. Sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.',
+    commands: {
+      'go north': 'hall',
+      'go east': 'study',
+      'examine door': 'examine_door'
+    }
+  },
+  hall: {
+    text: 'consectetur adipisci velit. sed quia non numquam eius modi tempora incidunt.\n\nYou come upon a set of stairs. There is a portrait on the wall. There is a grandfather clock slowly ticking down the hours to your midnight.',
+    commands: {
+      'go south': 'start',
+      'go north': 'library',
+      'go west': 'archive'
+    }
+  },
+  study: {
+    text: 'ut labore et dolore magnam aliquam quaerat voluptatem.\n\nYou find a desk blanketed by empty papers. Shelves of books abound. An unlit whale oil lamp stands in the middle of the well-worn floor.',
+    commands: {
+      'go west': 'start',
+      'go north': 'library',
+      'examine lamp': 'examine_lamp'
+    }
+  },
+  library: {
+    text: 'Ut enim ad minima veniam, quis nostrum exercitationem. More shelves than is reasonable, and they are sagging and bowed with the weight of texts. Nary a window to be seen but by the glint of light through the cracks in the backboards of the shelves which line all of the walls.',
+    commands: {
+      'go south': 'study',
+      'go east': 'bedroom',
+      'go west': 'archive'
+    }
+  },
+  bedroom: {
+    text: 'ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. There is a bed here, and it is obscured by a mosquito net of silk or something. There is a vanity with a cracked mirror, its silvered edges tarnished.',
+    commands: {
+      'go west': 'library',
+      'go south': 'study',
+      'examine bed': 'examine_bed'
+    }
+  },
+  archive: {
+    text: 'consequatur quis autem vel eum iure reprehenderit qui in ea voluptate. Your eyes are drawn to a steamer trunk. It is locked. Cabinets of files are stacked atop each other to the ceiling. They are unlocked, but they are empty.',
+    commands: {
+      'go east': 'hall',
+      'examine trunk': 'examine_trunk',
+      'go back': 'start'
+    }
+  },
+  examine_door: {
+    text: 'A mahogany door? It is heavy and impractical. neque porro quisquam est qui dolorem ipsum.',
+    commands: {
+      'back': 'start'
+    }
+  },
+  examine_lamp: {
+    text: 'A whale oil lamp. It is unlit and with a dry wick. Its glass chamber is barren of fuel. sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam.',
+    commands: {
+      'back': 'study'
+    }
+  },
+  examine_bed: {
+    text: 'A netted bed for two. As you part its curtains, you can tell nobody sleeps here. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis.',
+    commands: {
+      'back': 'bedroom'
+    }
+  },
+  examine_trunk: {
+    text: 'A steamer trunk that is locked. You cannot open it. consequatur quis autem vel eum iure reprehenderit qui in ea voluptate velit esse.',
+    commands: {
+      'back': 'archive'
+    }
+  }
+};
+
+let currentScene = 'start';
+
+function displayScene(sceneKey) {
+  const scene = scenes[sceneKey];
+  if (!scene) {
+    output.textContent += '\n[Unknown command or scene]\n';
+    output.scrollTop = output.scrollHeight;
+    return;
+  }
+  
+  currentScene = sceneKey;
+  output.textContent += '\n' + scene.text + '\n\n';
+  
+  const commandList = Object.keys(scene.commands);
+  if (commandList.length > 0) {
+    output.textContent += '[' + commandList.join(' | ') + ']\n';
+  }
+  
+  output.scrollTop = output.scrollHeight;
+  input.value = '';
+  input.focus();
+}
+
+input.addEventListener('keypress', (event) => {
+  if (event.key === 'Enter') {
+    const command = input.value.trim().toLowerCase();
+    
+    if (!command) return;
+    
+    output.textContent += '\n> ' + command + '\n';
+    
+    let nextScene = null;
+    for (const [cmd, scene] of Object.entries(scenes[currentScene].commands)) {
+      if (cmd === command) {
+        nextScene = scene;
+        break;
+      }
+    }
+    
+    if (nextScene) {
+      displayScene(nextScene);
+    } else {
+      output.textContent += '[Unknown command]\n';
+      input.value = '';
+      input.focus();
+    }
+  }
+});
+
+displayScene('start');
+</script>
+</body>
+</html>
