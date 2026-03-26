@@ -18,7 +18,7 @@ a:hover { text-decoration: underline; background: #333; }
 
 ul { list-style-type: square; margin-left: 20px; padding-left: 0; margin-top: 10px; margin-bottom: 10px; }
 li { margin-bottom: 6px; font-size: 13px; }
-h2 { margin-top: 0; margin-bottom: 8px; font-size: 16px; }
+.section-title { margin-top: 0; margin-bottom: 8px; font-size: 16px; font-weight: normal; }
 p { margin-top: 8px; margin-bottom: 8px; font-size: 13px; }
 hr { margin-bottom: 10px; }
 .sub-list { list-style-type: circle; margin-left: 20px; margin-top: 3px; }
@@ -31,7 +31,7 @@ hr { margin-bottom: 10px; }
 <div class="book-container">
 
     <div id="p1" class="page active-page">
-        <h2 style="text-align: center; letter-spacing: 2px; font-weight: normal;">Neque porro quisquam</h2>
+        <div class="section-title" style="text-align: center; letter-spacing: 2px;">Neque porro quisquam</div>
         
         <div class="diagram">
             <img src="https://via.placeholder.com/400/111111/cccccc?text=De+Finibus" alt="Cover">
@@ -48,7 +48,7 @@ hr { margin-bottom: 10px; }
     </div>
 
     <div id="p2" class="page">
-        <h2 style="font-weight: normal;">consectetur adipisci</h2>
+        <div class="section-title">consectetur adipisci</div>
         <hr style="border: 0; border-top: 1px dashed #444; margin-bottom: 20px;">
         <p>velit. Sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
         <p>Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?</p>
@@ -56,7 +56,7 @@ hr { margin-bottom: 10px; }
     </div>
 
         <div id="p3" class="page">
-                <h2 style="font-weight: normal;">vel illum qui</h2>
+                <div class="section-title">vel illum qui</div>
                 <hr style="border: 0; border-top: 1px dashed #444; margin-bottom: 10px;">
                 <div style="font-size: 12px; white-space: pre-wrap; overflow: auto;">
         [ <a onclick="turnPage(4)">dolorem eum fugiat</a> ]
@@ -71,7 +71,7 @@ hr { margin-bottom: 10px; }
         </div>
 
     <div id="p4" class="page">
-        <h2 style="font-weight: normal;">eius modi tempora</h2>
+        <div class="section-title">eius modi tempora</div>
         <hr style="border: 0; border-top: 1px dashed #444; margin-bottom: 20px;">
         <ul>
             <li>HAZARD_ALPHA: eius modi tempora incidunt ut labore et dolore.</li>
@@ -82,7 +82,7 @@ hr { margin-bottom: 10px; }
     </div>
 
     <div id="p5" class="page">
-        <h2 style="font-weight: normal;">DATA INTEGRITY</h2>
+        <div class="section-title">DATA INTEGRITY</div>
         <hr style="border: 0; border-top: 1px dashed #444; margin-bottom: 20px;">
         <ul>
             <li>ALCOHOL_ACQUISITION: neque porro quisquam est qui dolorem ipsum.</li>
